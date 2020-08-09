@@ -26,15 +26,40 @@
     "help": "nx help"
   },
   "private": true,
-  "dependencies": {},
+  "dependencies": {
+    "@nestjs/common": "^7.0.0",
+    "@nestjs/core": "^7.0.0",
+    "@nestjs/platform-express": "^7.0.0",
+    "@nestjs/swagger": "^4.5.12",
+    "@nestjs/typeorm": "^7.1.0",
+    "class-transformer": "^0.3.1",
+    "class-validator": "^0.12.2",
+    "pg": "^8.3.0",
+    "reflect-metadata": "^0.1.13",
+    "rxjs": "~6.5.5",
+    "swagger-ui-express": "^4.1.4",
+    "typeorm": "^0.2.25"
+  },
   "devDependencies": {
+    "@nrwl/nest": "^10.0.10",
     "@nrwl/workspace": "10.0.10",
     "@types/node": "~8.9.4",
     "dotenv": "6.2.0",
+    "eslint": "6.8.0",
+    "prettier": "2.0.4",
     "ts-node": "~7.0.0",
     "tslint": "~6.0.0",
-    "eslint": "6.8.0",
     "typescript": "~3.9.3",
-    "prettier": "2.0.4"
+    "@nrwl/jest": "10.0.10",
+    "jest": "25.2.3",
+    "@types/jest": "25.1.4",
+    "ts-jest": "25.2.1",
+    "@nrwl/node": "10.0.10",
+    "@nestjs/schematics": "^7.0.0",
+    "@nestjs/testing": "^7.0.0",
+    "@nrwl/eslint-plugin-nx": "10.0.10",
+    "@typescript-eslint/parser": "2.19.2",
+    "@typescript-eslint/eslint-plugin": "2.19.2",
+    "eslint-config-prettier": "6.0.0"
   }
 }
