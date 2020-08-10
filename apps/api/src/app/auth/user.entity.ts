@@ -2,22 +2,23 @@ import * as bcryptjs from 'bcryptjs';
 import {
   BaseEntity,
   Column,
+  CreateDateColumn,
   Entity,
   Index,
   OneToMany,
   PrimaryGeneratedColumn,
   Unique,
+  UpdateDateColumn,
 } from 'typeorm';
 import { Product } from '../product-inventory/products/product.entity';
 
 @Entity({ schema: 'Security', name: 'User' })
 @Unique('User_UserName_UK', ['userName'])
 export class User extends BaseEntity {
-  @Index('IUser_PK')
   @PrimaryGeneratedColumn({ name: 'Id' })
   id: number;
 
-  @Index('IUser_UserName_UK', { unique: true })
+  @Index({ unique: true })
   @Column({ name: 'UserName' })
   userName: string;
 
@@ -32,7 +33,12 @@ export class User extends BaseEntity {
     return hash === this.password;
   }
 
-  @Index('IFK_User_Product_ProductId')
   @OneToMany('Product', 'user', { eager: false })
   products: Product[];
+
+  @CreateDateColumn({ name: 'CreatedAt' })
+  createdAt: Date;
+
+  @UpdateDateColumn({ name: 'ModifiedAt' })
+  modifiedAt: Date;
 }

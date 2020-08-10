@@ -6,23 +6,29 @@ import {
   JoinColumn,
   ManyToOne,
   PrimaryGeneratedColumn,
+  CreateDateColumn,
+  UpdateDateColumn,
 } from 'typeorm';
 import { User } from '../../auth/user.entity';
 @Entity({ schema: 'ProductInventory', name: 'Product' })
 export class Product extends BaseEntity {
-  @Index()
+
   @PrimaryGeneratedColumn({ name: 'Id' })
   id: number;
 
   @Column({ name: 'Name' })
   name: string;
 
-  // @ManyToOne('User', 'products', { eager: false, nullable: false })
-  @ManyToOne((type) => User, (user) => user.products, {
+  @ManyToOne('User', 'products', {
     eager: false,
     nullable: false,
   })
   @JoinColumn({ name: 'UserId' })
-  @Index()
   user: User;
+
+  @CreateDateColumn({ name: 'CreatedAt' })
+  createdAt: Date;
+
+  @UpdateDateColumn({ name: 'ModifiedAt' })
+  modifiedAt: Date;
 }
