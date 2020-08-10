@@ -3,6 +3,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Product } from './product.entity';
 import { ProductRepository } from './product.repository';
+import { User } from '../../auth/user.entity';
 
 @Injectable()
 export class ProductsService {
@@ -12,12 +13,16 @@ export class ProductsService {
   ) {}
 
   async getProducts(
-    getProductFilterDto: GetProductFilterDto
+    getProductFilterDto: GetProductFilterDto,
+    user: User
   ): Promise<Product[]> {
-    return this.productRepository.getProducts(getProductFilterDto);
+    return this.productRepository.getProducts(getProductFilterDto, user);
   }
 
-  async createProduct(createProductDto: CreateProductDto): Promise<Product> {
-    return this.productRepository.createProduct(createProductDto);
+  async createProduct(
+    createProductDto: CreateProductDto,
+    user: User
+  ): Promise<Product> {
+    return this.productRepository.createProduct(createProductDto, user);
   }
 }

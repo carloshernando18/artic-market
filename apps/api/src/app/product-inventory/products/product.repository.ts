@@ -1,6 +1,7 @@
 import { CreateProductDto, GetProductFilterDto } from '@artic-market/data';
 import { InternalServerErrorException, Logger } from '@nestjs/common';
 import { EntityRepository, Repository } from 'typeorm';
+import { User } from '../../auth/user.entity';
 import { Product } from './product.entity';
 
 @EntityRepository(Product)
@@ -8,10 +9,12 @@ export class ProductRepository extends Repository<Product> {
   private logger = new Logger();
 
   async getProducts(
-    getProductFilterDto: GetProductFilterDto
+    getProductFilterDto: GetProductFilterDto,
+    user: User
   ): Promise<Product[]> {
     let products = [];
     const query = this.createQueryBuilder('product');
+    query.where('product.userId = :userId', { userId: user.id });
     if (getProductFilterDto.search) {
       query.andWhere('product.name LIKE :name', {
         name: `%${getProductFilterDto.search}%`,
@@ -31,9 +34,13 @@ export class ProductRepository extends Repository<Product> {
     return products;
   }
 
-  async createProduct(createProductDto: CreateProductDto): Promise<Product> {
+  async createProduct(
+    createProductDto: CreateProductDto,
+    user: User
+  ): Promise<Product> {
     const product = this.create();
     product.name = createProductDto.name;
+    product.userId = user.id;
     try {
       await product.save();
     } catch (error) {
@@ -43,6 +50,7 @@ export class ProductRepository extends Repository<Product> {
       );
       throw new InternalServerErrorException('Failed to create product');
     }
+    delete product.userId;
     return product;
   }
 }
